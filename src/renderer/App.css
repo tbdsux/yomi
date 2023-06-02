@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.milkdown {
+  @apply block bg-white;
+}
+
+.editor {
+  @apply mx-auto w-full max-w-full prose outline-none box-border overflow-hidden prose-red;
+}
