@@ -8,13 +8,13 @@ export default function Sidebar() {
       <div className="">
         <ul>
           <li>
-            <button className="text-red-600 bg-red-100 opacity-80 hover:opacity-100 duration-300 p-1 rounded-lg my-1">
+            <button className="text-red-500 bg-red-100 opacity-80 hover:opacity-100 duration-300 p-1 rounded-lg my-1">
               <IconTextPlus className="" size={20} />
             </button>
           </li>
 
           <li>
-            <button className="text-red-600 bg-red-100 opacity-80 hover:opacity-100 duration-300 p-1 rounded-lg my-1">
+            <button className="text-red-500 bg-red-100 opacity-80 hover:opacity-100 duration-300 p-1 rounded-lg my-1">
               <IconNotes className="" size={20} />
             </button>
           </li>

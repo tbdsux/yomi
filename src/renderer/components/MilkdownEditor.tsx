@@ -18,8 +18,10 @@ const markdown = `
 
 Create notes with **Markdown**
 
-TODOS:
-- Create a new file and save it...
+
+> Any fool can write code that a computer can understand. Good programmers write code that humans can understand.
+
+-- Martin Fowler
 `;
 
 export default function MilkdownEditor() {
