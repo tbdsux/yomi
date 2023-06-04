@@ -6,17 +6,17 @@ import DashboardHeader from '../modules/dashboard/header';
 export default function Dashboard() {
   return (
     <DefaultLayout>
-      <div className="w-11/12 mb-4 mx-auto ">
-        <DashboardHeader />
+      <MilkdownProvider>
+        <div className="w-11/12 mb-4 mx-auto ">
+          <DashboardHeader />
 
-        <hr className="my-3" />
+          <hr className="my-3" />
 
-        <div className="h-full">
-          <MilkdownProvider>
+          <div className="h-full">
             <MilkdownEditor />
-          </MilkdownProvider>
+          </div>
         </div>
-      </div>
+      </MilkdownProvider>
     </DefaultLayout>
   );
 }
