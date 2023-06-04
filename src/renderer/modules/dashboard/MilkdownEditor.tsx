@@ -12,6 +12,12 @@ import { Milkdown, useEditor } from '@milkdown/react';
 import { nord } from '@milkdown/theme-nord';
 
 import '@milkdown/theme-nord/style.css';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { shallow } from 'zustand/shallow';
+import { useNotesStore } from '../../stores/useNotesStores';
+
+import { replaceAll } from '@milkdown/utils';
 
 const markdown = `
 # yomi
@@ -25,12 +31,37 @@ Create notes with **Markdown**
 `;
 
 export default function MilkdownEditor() {
+  const { id } = useParams();
+  const { notes, setCurrent, current } = useNotesStore(
+    (s) => ({
+      notes: s.notes,
+      setCurrent: s.setCurrent,
+      current: s.current,
+    }),
+    shallow
+  );
+
   const { get } = useEditor((root) =>
     Editor.make()
       .config(nord)
       .config((ctx) => {
         ctx.set(rootCtx, root);
-        ctx.set(defaultValueCtx, markdown);
+
+        if (!id) {
+          ctx.set(defaultValueCtx, markdown);
+          return;
+        }
+
+        const note = notes[id];
+        if (!note) {
+          // if no, show default value
+          ctx.set(defaultValueCtx, markdown);
+          return;
+        }
+
+        // update with current content
+        ctx.set(defaultValueCtx, note.content);
+        setCurrent(note);
       })
       .use(commonmark)
       .use(history)
@@ -42,6 +73,16 @@ export default function MilkdownEditor() {
       .use(cursor)
       .use(prism)
   );
+
+  useEffect(() => {
+    if (!current) {
+      get()?.action(replaceAll(markdown));
+    }
+  }, [current, get]);
+
+  useEffect(() => {
+    console.log(id);
+  }, [id]);
 
   return <Milkdown />;
 }

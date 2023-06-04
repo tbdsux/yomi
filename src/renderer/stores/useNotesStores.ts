@@ -1,15 +1,16 @@
 import { create } from 'zustand';
 import { getFromLocalStorage, saveToLocalStorage } from '../lib/localStorage';
-import { IKeyNotes, INotes } from '../typings/notes';
+import { INotes } from '../typings/notes';
 
 interface INotesData {
-  notes: INotes[];
-  keyNotes: IKeyNotes[];
-  currentNote: string; // id of current note in editor
+  notes: {
+    [key: string]: INotes;
+  };
+  current: INotes | null;
 }
 
 interface NotesState extends INotesData {
-  setCurrentNote: (id: string) => void;
+  setCurrent: (n: INotes | null) => void;
   saveNote: (note: INotes) => void;
   initData: () => void;
 }
@@ -17,17 +18,27 @@ interface NotesState extends INotesData {
 export const YOMI_DATA_KEY = 'yomi-data';
 
 export const useNotesStore = create<NotesState>()((set) => ({
-  notes: [],
-  keyNotes: [],
-  currentNote: '',
-  setCurrentNote: (id) => set(() => ({ currentNote: id })),
+  notes: {},
+  current: null,
+  setCurrent: (n) => set(() => ({ current: n })),
   saveNote: (note) =>
     set((state) => {
-      const { id, title } = note;
+      const { id } = note;
+
+      let lastUpdated: number | undefined = undefined;
+      if (state.notes[id]) {
+        // if exists
+        lastUpdated = new Date().getTime();
+      }
 
       const newState = {
-        notes: [note, ...state.notes],
-        keyNotes: [{ id, title }, ...state.keyNotes],
+        notes: {
+          ...state.notes,
+          [id]: {
+            lastUpdated,
+            ...note,
+          },
+        },
         currentNote: id,
       };
 
