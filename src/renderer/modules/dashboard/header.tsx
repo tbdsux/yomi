@@ -42,7 +42,7 @@ export default function DashboardHeader() {
           name="title"
           id="title"
           placeholder="My Notes"
-          defaultValue={current?.title}
+          defaultValue={current?.title ?? "Untitled"}
           className="border-b-2 text-sm px-2 py-1 w-96 outline-none focus:border-red-300"
         />
       </div>

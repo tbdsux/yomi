@@ -2,7 +2,7 @@ import { Route, MemoryRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 
 import { useEffect } from 'react';
-import Sidebar from './components/sidebar';
+import Sidebar from './components/Sidebar';
 import Dashboard from './routes/dashboard';
 import Notes from './routes/notes';
 import { useNotesStore } from './stores/useNotesStores';

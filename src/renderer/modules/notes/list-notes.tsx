@@ -37,15 +37,13 @@ export default function ListNotes() {
                 <small className="text-xs" title="Last Updated">
                   {note.lastUpdated && (
                     <>
-                      Last Updated: {new Date(note.lastUpdated).toDateString()}{' '}
-                      | {new Date(note.lastUpdated).toLocaleTimeString()}
+                      Last Updated: {new Date(note.lastUpdated).toDateString()}
                     </>
                   )}
                 </small>
 
                 <small className="text-xs" title="Created Date">
-                  {new Date(note.createdDate).toDateString()} |{' '}
-                  {new Date(note.createdDate).toLocaleTimeString()}
+                  {new Date(note.createdDate).toDateString()}
                 </small>
               </div>
             </Link>

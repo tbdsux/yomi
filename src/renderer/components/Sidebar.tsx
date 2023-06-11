@@ -1,6 +1,8 @@
-import { IconAdjustments, IconNotes, IconTextPlus } from '@tabler/icons-react';
+import { IconAdjustments, IconTextPlus } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { useNotesStore } from '../stores/useNotesStores';
+
+import icon from '../../../assets/icon.png';
 
 export default function Sidebar() {
   const setCurrentNote = useNotesStore((s) => s.setCurrent);
@@ -18,28 +20,17 @@ export default function Sidebar() {
 
   return (
     <div className="fixed w-[50px] left-0 h-screen border-r py-4 px-2 bg-grey-100 flex flex-col items-center justify-between">
-      <h1 className="text-sm font-black text-red-600 tracking-wide">yomi</h1>
+      <div className="flex flex-col items-center">
+        <button onClick={listNotesHandler}>
+          <img src={icon} className="h-5 w-5 object-contain" alt="yomi" />
+        </button>
 
-      <div className="">
-        <ul>
-          <li>
-            <button
-              onClick={newNoteHandler}
-              className="text-red-500 bg-red-100 opacity-80 hover:opacity-100 duration-300 p-1 rounded-lg my-1 flex"
-            >
-              <IconTextPlus className="" size={20} />
-            </button>
-          </li>
-
-          <li>
-            <button
-              onClick={listNotesHandler}
-              className="text-red-500 bg-red-100 opacity-80 hover:opacity-100 duration-300 p-1 rounded-lg my-1 flex"
-            >
-              <IconNotes className="" size={20} />
-            </button>
-          </li>
-        </ul>
+        <button
+          onClick={newNoteHandler}
+          className="text-red-500 bg-red-100 opacity-80 mt-4 hover:opacity-100 duration-300 p-0.5 rounded-lg flex"
+        >
+          <IconTextPlus className="" size={20} />
+        </button>
       </div>
 
       <div className="mt-32">
