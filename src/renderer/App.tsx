@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Dashboard from './routes/dashboard';
 import Notes from './routes/notes';
+import Settings from './routes/settings';
 import { useNotesStore } from './stores/useNotesStores';
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/notes" element={<Notes />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="/:id" element={<Dashboard />} />
           </Routes>
         </div>

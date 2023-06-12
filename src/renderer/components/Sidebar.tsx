@@ -18,6 +18,11 @@ export default function Sidebar() {
     navigate('/notes');
   };
 
+  const settingsHandler = () => {
+    setCurrentNote(null);
+    navigate('/settings');
+  };
+
   return (
     <div className="fixed w-[50px] left-0 h-screen border-r py-4 px-2 bg-grey-100 flex flex-col items-center justify-between">
       <div className="flex flex-col items-center">
@@ -35,6 +40,7 @@ export default function Sidebar() {
 
       <div className="mt-32">
         <button
+          onClick={settingsHandler}
           title="App Settings"
           className="text-grey-900 bg-grey-200 opacity-80 hover:opacity-100 duration-300 p-1 rounded-lg"
         >
