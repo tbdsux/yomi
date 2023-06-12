@@ -10,14 +10,13 @@ import { prism } from '@milkdown/plugin-prism';
 import { commonmark } from '@milkdown/preset-commonmark';
 import { Milkdown, useEditor } from '@milkdown/react';
 import { nord } from '@milkdown/theme-nord';
+import { replaceAll } from '@milkdown/utils';
 
 import '@milkdown/theme-nord/style.css';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { shallow } from 'zustand/shallow';
 import { useNotesStore } from '../../stores/useNotesStores';
-
-import { replaceAll } from '@milkdown/utils';
 
 const markdown = `
 # yomi
@@ -79,10 +78,6 @@ export default function MilkdownEditor() {
       get()?.action(replaceAll(markdown));
     }
   }, [current, get]);
-
-  useEffect(() => {
-    console.log(id);
-  }, [id]);
 
   return <Milkdown />;
 }

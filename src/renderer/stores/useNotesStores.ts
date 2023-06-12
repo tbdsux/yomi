@@ -25,7 +25,7 @@ export const useNotesStore = create<NotesState>()((set) => ({
     set((state) => {
       const { id } = note;
 
-      let lastUpdated: number | undefined = undefined;
+      let lastUpdated: number | undefined;
       if (state.notes[id]) {
         // if exists
         lastUpdated = new Date().getTime();

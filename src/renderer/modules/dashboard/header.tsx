@@ -56,6 +56,7 @@ export default function DashboardHeader() {
 
       <div>
         <button
+          type="button"
           onClick={saveNoteHandler}
           className="bg-rose-400 hover:bg-rose-500 inline-flex items-center p-1 rounded-lg text-white duration-300"
           title="Save Note"
