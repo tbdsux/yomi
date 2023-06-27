@@ -1,12 +1,12 @@
 {
-  "name": "electron-react-boilerplate",
-  "version": "4.6.0",
-  "description": "A foundation for scalable desktop apps",
+  "name": "yomi",
+  "version": "0.1.0",
+  "description": "Create notes",
   "license": "MIT",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "name": "Joshue Abance",
+    "email": "euhsojlogro112002@gmail.com",
+    "url": "https://github.com/tbdsux/yomi"
   },
   "main": "./dist/main/main.js",
   "scripts": {
