@@ -10,12 +10,9 @@ import { prism } from '@milkdown/plugin-prism';
 import { commonmark } from '@milkdown/preset-commonmark';
 import { Milkdown, useEditor } from '@milkdown/react';
 import { nord } from '@milkdown/theme-nord';
-import { replaceAll } from '@milkdown/utils';
 
 import '@milkdown/theme-nord/style.css';
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { shallow } from 'zustand/shallow';
 import { useNotesStore } from '../../stores/useNotesStores';
 
 const markdown = `
@@ -31,16 +28,13 @@ Create notes with **Markdown**
 
 export default function MilkdownEditor() {
   const { id } = useParams();
-  const { notes, setCurrent, current } = useNotesStore(
-    (s) => ({
-      notes: s.notes,
-      setCurrent: s.setCurrent,
-      current: s.current,
-    }),
-    shallow
-  );
+  const { notes, setCurrent } = useNotesStore((s) => ({
+    notes: s.notes,
+    setCurrent: s.setCurrent,
+    current: s.current,
+  }));
 
-  const { get } = useEditor((root) =>
+  useEditor((root) =>
     Editor.make()
       .config(nord)
       .config((ctx) => {
@@ -72,12 +66,6 @@ export default function MilkdownEditor() {
       .use(cursor)
       .use(prism)
   );
-
-  useEffect(() => {
-    if (!current) {
-      get()?.action(replaceAll(markdown));
-    }
-  }, [current, get]);
 
   return <Milkdown />;
 }
