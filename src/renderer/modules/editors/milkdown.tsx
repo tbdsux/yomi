@@ -12,27 +12,11 @@ import { Milkdown, useEditor } from '@milkdown/react';
 import { nord } from '@milkdown/theme-nord';
 
 import '@milkdown/theme-nord/style.css';
-import { useParams } from 'react-router-dom';
+import { defaultContent } from '../../lib/content';
 import { useNotesStore } from '../../stores/useNotesStores';
 
-const markdown = `
-# yomi
-
-Create notes with **Markdown**
-
-
-> Any fool can write code that a computer can understand. Good programmers write code that humans can understand.
-
--- Martin Fowler
-`;
-
-export default function MilkdownEditor() {
-  const { id } = useParams();
-  const { notes, setCurrent } = useNotesStore((s) => ({
-    notes: s.notes,
-    setCurrent: s.setCurrent,
-    current: s.current,
-  }));
+export default function EditorMilkdown() {
+  const current = useNotesStore((s) => s.current);
 
   useEditor((root) =>
     Editor.make()
@@ -40,21 +24,14 @@ export default function MilkdownEditor() {
       .config((ctx) => {
         ctx.set(rootCtx, root);
 
-        if (!id) {
-          ctx.set(defaultValueCtx, markdown);
-          return;
-        }
-
-        const note = notes[id];
-        if (!note) {
+        if (!current) {
           // if no, show default value
-          ctx.set(defaultValueCtx, markdown);
+          ctx.set(defaultValueCtx, defaultContent);
           return;
         }
 
         // update with current content
-        ctx.set(defaultValueCtx, note.content);
-        setCurrent(note);
+        ctx.set(defaultValueCtx, current.content);
       })
       .use(commonmark)
       .use(history)
@@ -67,5 +44,9 @@ export default function MilkdownEditor() {
       .use(prism)
   );
 
-  return <Milkdown />;
+  return (
+    <div className="h-full">
+      <Milkdown />
+    </div>
+  );
 }

@@ -1,43 +1,21 @@
-import { useInstance } from '@milkdown/react';
-import { getMarkdown } from '@milkdown/utils';
-import { IconCheck, IconFileFilled } from '@tabler/icons-react';
-import { nanoid } from 'nanoid';
-import { useRef, useState } from 'react';
+import { IconCode } from '@tabler/icons-react';
+import { useRef } from 'react';
+import useAppSettings from 'renderer/stores/useAppSettings';
 import { useNotesStore } from '../../stores/useNotesStores';
+import EditorMilkdownSave from './milkdown/save';
+import EditorMonacoSave from './monaco/save';
 
 export default function DashboardHeader() {
-  const { saveNote, current } = useNotesStore((s) => ({
-    saveNote: s.saveNote,
-    current: s.current,
+  const current = useNotesStore((s) => s.current);
+  const { editor, setEditor } = useAppSettings((s) => ({
+    setEditor: s.setEditor,
+    editor: s.editor,
   }));
 
-  const [saved, setSaved] = useState(false);
-
   const inputTitleRef = useRef<HTMLInputElement>(null);
-  const [loading, get] = useInstance();
 
-  const saveNoteHandler = () => {
-    if (loading) return;
-
-    const title = inputTitleRef.current?.value;
-    if (!title) return;
-
-    let id = '';
-    if (current) {
-      id = current.id;
-    } else {
-      id = nanoid();
-    }
-
-    const editor = get();
-    const content = editor.action(getMarkdown());
-
-    saveNote({ id, title, content, createdDate: new Date().getTime() });
-
-    setSaved(true);
-    setTimeout(() => {
-      setSaved(false);
-    }, 3000);
+  const switchEditor = () => {
+    setEditor(editor === 'milkdown' ? 'monaco' : 'milkdown');
   };
 
   return (
@@ -54,25 +32,20 @@ export default function DashboardHeader() {
         />
       </div>
 
-      <div>
-        <button
-          type="button"
-          onClick={saveNoteHandler}
-          className="bg-rose-400 hover:bg-rose-500 inline-flex items-center p-1 rounded-lg text-white duration-300"
-          title="Save Note"
-        >
-          <IconFileFilled size={14} />
+      <div className="inline-flex items-stretch">
+        {editor === 'milkdown' ? (
+          <EditorMilkdownSave inputTitleRef={inputTitleRef} />
+        ) : (
+          <EditorMonacoSave inputTitleRef={inputTitleRef} />
+        )}
 
-          <small className="lowercase font-medium tracking-wide ml-0.5 inline-flex items-center">
-            {saved ? (
-              <>
-                Saved
-                <IconCheck size={14} />
-              </>
-            ) : (
-              'Save'
-            )}
-          </small>
+        <button
+          onClick={switchEditor}
+          type="button"
+          title="Switch Editor"
+          className="bg-gray-400 hover:bg-gray-500 inline-flex items-center px-2 rounded-lg text-white duration-300 ml-1"
+        >
+          <IconCode size={14} />
         </button>
       </div>
     </div>

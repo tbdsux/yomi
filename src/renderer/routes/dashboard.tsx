@@ -1,20 +1,21 @@
-import { MilkdownProvider } from '@milkdown/react';
+import { AppEditors } from 'renderer/lib/editors';
+import EditorProvider from 'renderer/modules/dashboard/editorContext';
+import useAppSettings from 'renderer/stores/useAppSettings';
 import Container from '../components/Container';
-import MilkdownEditor from '../modules/dashboard/MilkdownEditor';
 import DashboardHeader from '../modules/dashboard/header';
 
 export default function Dashboard() {
+  const editor = useAppSettings((s) => s.editor);
+
   return (
     <Container>
-      <MilkdownProvider>
+      <EditorProvider>
         <DashboardHeader />
 
         <hr className="my-3" />
 
-        <div className="h-full">
-          <MilkdownEditor />
-        </div>
-      </MilkdownProvider>
+        {AppEditors[editor]}
+      </EditorProvider>
     </Container>
   );
 }
